@@ -22,7 +22,7 @@ jobs:
         run: helm package .
 
       - name: Publish Helm Chart
-        uses: helm/chart-releaser-action@v2
+        uses: helm/chart-releaser-action@v1.4.0
         with:
           chart_glob: "*.tgz"
           github_token: ${{ secrets.GITHUB_TOKEN }}
