@@ -1,0 +1,21 @@
+{{- define "recipe-service-chart.fullname" -}}
+{{- printf "%s-%s" .Release.Name .Chart.Name }}
+{{- end }}
+
+{{- define "recipe-service-chart.name" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "recipe-service-chart.fullname" . }}
+  labels:
+    app: {{ include "recipe-service-chart.name" . }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+  selector:
+    app: {{ include "recipe-service-chart.name" . }}
